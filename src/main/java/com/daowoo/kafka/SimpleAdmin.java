@@ -1,12 +1,9 @@
 
 package com.daowoo.kafka;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.kafka.clients.admin.AdminClient;
@@ -14,12 +11,8 @@ import org.apache.kafka.clients.admin.CreateTopicsResult;
 import org.apache.kafka.clients.admin.DeleteTopicsResult;
 import org.apache.kafka.clients.admin.DescribeClusterResult;
 import org.apache.kafka.clients.admin.DescribeTopicsResult;
-import org.apache.kafka.clients.admin.KafkaAdminClient;
 import org.apache.kafka.clients.admin.ListTopicsResult;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.producer.*;
-import org.apache.kafka.common.PartitionInfo;
 
 public class SimpleAdmin {
 	
@@ -69,11 +62,13 @@ public class SimpleAdmin {
 	
 	static void list_topic(AdminClient client) throws InterruptedException, ExecutionException, TimeoutException {
 		ListTopicsResult result = client.listTopics();
-		
 		System.out.println("list topic: ");
 		result.listings().get().forEach(V -> System.out.println("\t" + V));
 	}
 	
+	/** 
+	 * get controller address
+	 **/
 	static void discribe_cluster(AdminClient client) throws InterruptedException, ExecutionException  {
 		DescribeClusterResult result = client.describeCluster();
 		System.out.println("cluster stat: controller [" + result.controller().get() + "]");
@@ -83,12 +78,12 @@ public class SimpleAdmin {
 	
 	// describeConfigs(Collection<ConfigResource> resources)
 	public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
-		String topic = "test";
-		AdminClient client = getAdmin("192.168.36.10:9092");
+		String topic = "work";
+		AdminClient client = getAdmin("192.168.36.10:9093");
 		
 		/** change topic */
-		delete_topics(client, topic);
-		create_topics(client, topic, 1, (short)1);
+		//delete_topics(client, topic);
+		//create_topics(client, topic, 1, (short)1);
 		
 		/** cluster status */
 		discribe_topic(client, topic);

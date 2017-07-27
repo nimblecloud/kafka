@@ -52,7 +52,7 @@ public class SimpleConsumer {
 			for (ConsumerRecord<String, String> record : records) {
 				count++;
 				
-				if (total > 0) {
+				if (total > 0 || count % 10000 == 0) {
 					System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
 				}
 			}
@@ -167,11 +167,11 @@ public class SimpleConsumer {
 	
 	static void seek_beginning(Consumer<String, String> consumer) {
 		
+		consume_records(consumer, 1, 1);
 		consumer.seekToBeginning(consumer.assignment());
 		consumer.commitSync();
 		
 		System.out.print("consumer from beginning, topic " + consumer.assignment() + ": ");
-		consume_records(consumer, 100, 10000);
 	}
 	
 	static void consume_offset(Consumer<String, String> consumer) {
@@ -204,12 +204,18 @@ public class SimpleConsumer {
 	
 	public static void main(String[] args) throws InterruptedException {
 		String topic = "test";
-		String group = "test_group";
+		String group = "local_group";
 		
 		Consumer<String, String> consumer = getConsumer("192.168.36.10:9092", group);
 		
 		try {
 			consumer.subscribe(Arrays.asList("test"));
+			
+			if (false) {
+				seek_beginning(consumer);
+				consume_records(consumer, 100000000, 0);
+				return;
+			}
 			
 			/** consume message */
 			consume_records(consumer, 200, 10);
@@ -225,16 +231,10 @@ public class SimpleConsumer {
 			assignment_stat(consumer);
 			
 			/** get inner topic: offset */
-			consume_offset(consumer);
+			//consume_offset(consumer);
 			
 			/** listen for topic change */
-			listen_rebalance(consumer);
-			
-			/*
-			manually_partition(consumer);
-			*/
-			//ConsumerRebalanceListener
-			
+			//listen_rebalance(consumer);
 			
 		} finally {
 			System.out.println("done");
