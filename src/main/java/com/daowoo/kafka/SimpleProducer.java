@@ -56,7 +56,7 @@ public class SimpleProducer {
 	}
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		String topic = "work";
+		String topic = "test";
 		
 		Producer<String, String> producer = getProducer("192.168.36.10:9092");
 		

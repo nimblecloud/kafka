@@ -218,23 +218,25 @@ public class SimpleConsumer {
 			}
 			
 			/** consume message */
-			consume_records(consumer, 200, 10);
-			manually_commit(consumer, 200, 0);
+			//consume_records(consumer, 200, 10);
+			//manually_commit(consumer, 200, 0);
 			
 			/** get statistic */
-			topics_stat(consumer, "");
-			committed_stat(consumer);
-			endoffset_stat(consumer);
+			//topics_stat(consumer, "");
+			//committed_stat(consumer);
+			//endoffset_stat(consumer);
 			
 			/** change state */
-			seek_beginning(consumer);
-			assignment_stat(consumer);
+			//seek_beginning(consumer);
+			//assignment_stat(consumer);
 			
 			/** get inner topic: offset */
 			//consume_offset(consumer);
 			
 			/** listen for topic change */
 			//listen_rebalance(consumer);
+			
+			consume_records(consumer, 1000, 1000);
 			
 		} finally {
 			System.out.println("done");
