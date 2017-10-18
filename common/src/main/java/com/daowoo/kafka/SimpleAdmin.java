@@ -13,13 +13,14 @@ import org.apache.kafka.clients.admin.DescribeClusterResult;
 import org.apache.kafka.clients.admin.DescribeTopicsResult;
 import org.apache.kafka.clients.admin.ListTopicsResult;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.clients.producer.Producer;
 
 public class SimpleAdmin {
 	
-	static AdminClient getAdmin(String server) {
+	static AdminClient getAdmin(Configure config) {
 		Properties props = new Properties();
-		props.put("bootstrap.servers", server);
-		props.put("client.id", "client_admin");
+		props.put("bootstrap.servers", config.getProperty("broker"));
+		props.put("client.id", config.getProperty("admin_client"));
 	
 		return AdminClient.create(props);
 	}
@@ -78,8 +79,9 @@ public class SimpleAdmin {
 	
 	// describeConfigs(Collection<ConfigResource> resources)
 	public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
-		String topic = "work";
-		AdminClient client = getAdmin("192.168.36.10:9093");
+		Configure config = new Configure();
+		AdminClient client = getAdmin(config);
+		String topic  = config.getProperty("admin_topic");
 		
 		/** change topic */
 		//delete_topics(client, topic);

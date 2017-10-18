@@ -13,15 +13,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.kafka.clients.consumer.*;
+import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.common.TopicPartition;
 
 public class SimpleConsumer {
 
-	static Consumer<String, String> getConsumer(String server, String group) {
+	static Consumer<String, String> getConsumer(Configure config) {
 		Properties props = new Properties();
-		props.put("bootstrap.servers", server);
-	    props.put("group.id", group);
-	    props.put("client.id", "test_client");
+		props.put("bootstrap.servers", config.getProperty("broker"));
+	    props.put("group.id", config.getProperty("group"));
+	    props.put("client.id", config.getProperty("client"));
 	    
 	    props.put("enable.auto.commit", "true");
 	    props.put("auto.commit.interval.ms", "1000");
@@ -52,7 +53,7 @@ public class SimpleConsumer {
 			for (ConsumerRecord<String, String> record : records) {
 				count++;
 				
-				if (total > 0 || count % 10000 == 0) {
+				if (total > 0 || count % 1000 == 0) {
 					System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
 				}
 			}
@@ -62,7 +63,7 @@ public class SimpleConsumer {
 			}
 			
 			if (last + time < System.currentTimeMillis()) {
-				System.out.printf("consume records, process [%d]\n", count);
+				System.out.printf("consume records, process [%d], using [%d]\n", count, System.currentTimeMillis() - last);
 				break;
 			}
 		}
@@ -203,13 +204,12 @@ public class SimpleConsumer {
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
-		String topic = "test";
-		String group = "local_group";
-		
-		Consumer<String, String> consumer = getConsumer("192.168.36.10:9092", group);
-		
+		Configure config = new Configure();
+		Consumer<String, String> consumer = getConsumer(config);
+
 		try {
-			consumer.subscribe(Arrays.asList("test"));
+			String topic  = config.getProperty("topic");
+			consumer.subscribe(Arrays.asList(topic));
 			
 			if (false) {
 				seek_beginning(consumer);
@@ -235,8 +235,8 @@ public class SimpleConsumer {
 			
 			/** listen for topic change */
 			//listen_rebalance(consumer);
-			
-			consume_records(consumer, 1000, 1000);
+			seek_beginning(consumer);
+			consume_records(consumer, 10000, 1000);
 			
 		} finally {
 			System.out.println("done");

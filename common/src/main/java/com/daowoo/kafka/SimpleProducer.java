@@ -9,13 +9,15 @@ import org.apache.kafka.common.PartitionInfo;
 
 public class SimpleProducer {
 	
-	static Producer<String, String> getProducer(String server) {
+	static Producer<String, String> getProducer(Configure config) {
 		Properties props = new Properties();
-		props.put("bootstrap.servers", server);
+		props.put("bootstrap.servers", config.getProperty("broker"));
+
 		props.put("retries", 0);
 		props.put("batch.size", 16384);
 		props.put("buffer.memory", 33554432);
-		props.put("client.id", "test_program");
+		props.put("client.id", config.getProperty("client"));
+
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		
@@ -49,28 +51,31 @@ public class SimpleProducer {
 			System.out.println("call back, " + metadata + ", time " + metadata.timestamp());
 		};
 		
-		for(int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			System.out.println("send " + i);
 			producer.send(new ProducerRecord<String, String>(topic, Integer.toString(i), Integer.toString(i * 10)), handle);
 		}
 	}
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		String topic = "test";
-		
-		Producer<String, String> producer = getProducer("192.168.36.10:9092");
-		
+		Configure config = new Configure();
+
+		Producer<String, String> producer = getProducer(config);
+		String topic  = config.getProperty("topic");
+
 		/** get inner state */
 		display_topic(producer, topic);
 		
 		sending_topic(producer, topic, 100);
-	
-		sending_handle(producer, topic);
+
+		if (false) {
+			sending_handle(producer, topic);
+		}
 		
 		/** no need, just for test */
 		producer.flush();
-		
-		System.out.println("Message sent successfully");
 		producer.close();
+
+		System.out.println("Message sent successfully");
 	}
 }
