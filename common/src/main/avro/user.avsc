@@ -1,4 +1,4 @@
-{"namespace": "example.avro",
+{"namespace": "com.daowoo.avro",
  "type": "record",
  "name": "User",
  "fields": [

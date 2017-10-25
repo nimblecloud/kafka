@@ -8,8 +8,8 @@ import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.PartitionInfo;
 
 public class SimpleProducer {
-	
-	static Producer<String, String> getProducer(Configure config) {
+
+	public static Properties getProperties(Configure config) {
 		Properties props = new Properties();
 		props.put("bootstrap.servers", config.getProperty("broker"));
 
@@ -20,15 +20,18 @@ public class SimpleProducer {
 
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-		
+
 		props.put("acks", "all");
 		props.put("linger.ms", 1);
-		
-		//partitioner.class
+		return props;
+	}
+	
+	public static Producer<String, String> getProducer(Configure config) {
+		Properties props = getProperties(config);
 		return new KafkaProducer<>(props);
 	}
 	
-	static void	display_topic(Producer<String, String> producer, String topic) {
+	static void	  display_topic(Producer<String, String> producer, String topic) {
 		List<PartitionInfo> list = producer.partitionsFor(topic);
 		list.stream().forEach(System.out::print);	
 		System.out.println("");

@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package example.avro;
+package com.daowoo.avro;
 
 import org.apache.avro.specific.SpecificData;
 import org.apache.avro.message.BinaryMessageEncoder;
@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class User extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -3588479540582100558L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"User\",\"namespace\":\"example.avro\",\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"favorite_number\",\"type\":[\"int\",\"null\"]},{\"name\":\"favorite_color\",\"type\":[\"string\",\"null\"]}]}");
+  private static final long serialVersionUID = -6813623047198164888L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"User\",\"namespace\":\"com.daowoo.avro\",\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"favorite_number\",\"type\":[\"int\",\"null\"]},{\"name\":\"favorite_color\",\"type\":[\"string\",\"null\"]}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -148,8 +148,8 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * Creates a new User RecordBuilder.
    * @return A new User RecordBuilder
    */
-  public static example.avro.User.Builder newBuilder() {
-    return new example.avro.User.Builder();
+  public static com.daowoo.avro.User.Builder newBuilder() {
+    return new com.daowoo.avro.User.Builder();
   }
 
   /**
@@ -157,8 +157,8 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * @param other The existing builder to copy.
    * @return A new User RecordBuilder
    */
-  public static example.avro.User.Builder newBuilder(example.avro.User.Builder other) {
-    return new example.avro.User.Builder(other);
+  public static com.daowoo.avro.User.Builder newBuilder(com.daowoo.avro.User.Builder other) {
+    return new com.daowoo.avro.User.Builder(other);
   }
 
   /**
@@ -166,8 +166,8 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * @param other The existing instance to copy.
    * @return A new User RecordBuilder
    */
-  public static example.avro.User.Builder newBuilder(example.avro.User other) {
-    return new example.avro.User.Builder(other);
+  public static com.daowoo.avro.User.Builder newBuilder(com.daowoo.avro.User other) {
+    return new com.daowoo.avro.User.Builder(other);
   }
 
   /**
@@ -189,7 +189,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(example.avro.User.Builder other) {
+    private Builder(com.daowoo.avro.User.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.name)) {
         this.name = data().deepCopy(fields()[0].schema(), other.name);
@@ -209,7 +209,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
      * Creates a Builder by copying an existing User instance
      * @param other The existing instance to copy.
      */
-    private Builder(example.avro.User other) {
+    private Builder(com.daowoo.avro.User other) {
             super(SCHEMA$);
       if (isValidValue(fields()[0], other.name)) {
         this.name = data().deepCopy(fields()[0].schema(), other.name);
@@ -238,7 +238,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'name'.
       * @return This builder.
       */
-    public example.avro.User.Builder setName(java.lang.CharSequence value) {
+    public com.daowoo.avro.User.Builder setName(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.name = value;
       fieldSetFlags()[0] = true;
@@ -258,7 +258,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * Clears the value of the 'name' field.
       * @return This builder.
       */
-    public example.avro.User.Builder clearName() {
+    public com.daowoo.avro.User.Builder clearName() {
       name = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -277,7 +277,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'favorite_number'.
       * @return This builder.
       */
-    public example.avro.User.Builder setFavoriteNumber(java.lang.Integer value) {
+    public com.daowoo.avro.User.Builder setFavoriteNumber(java.lang.Integer value) {
       validate(fields()[1], value);
       this.favorite_number = value;
       fieldSetFlags()[1] = true;
@@ -297,7 +297,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * Clears the value of the 'favorite_number' field.
       * @return This builder.
       */
-    public example.avro.User.Builder clearFavoriteNumber() {
+    public com.daowoo.avro.User.Builder clearFavoriteNumber() {
       favorite_number = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -316,7 +316,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'favorite_color'.
       * @return This builder.
       */
-    public example.avro.User.Builder setFavoriteColor(java.lang.CharSequence value) {
+    public com.daowoo.avro.User.Builder setFavoriteColor(java.lang.CharSequence value) {
       validate(fields()[2], value);
       this.favorite_color = value;
       fieldSetFlags()[2] = true;
@@ -336,7 +336,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * Clears the value of the 'favorite_color' field.
       * @return This builder.
       */
-    public example.avro.User.Builder clearFavoriteColor() {
+    public com.daowoo.avro.User.Builder clearFavoriteColor() {
       favorite_color = null;
       fieldSetFlags()[2] = false;
       return this;

@@ -1,8 +1,5 @@
 
-package example.avro;
-
-import java.net.URL;
-import java.util.Properties;
+package com.daowoo.avro;
 
 import com.daowoo.kafka.Configure;
 import org.apache.avro.Schema;
@@ -19,8 +16,6 @@ import org.apache.avro.specific.SpecificDatumWriter;
 
 import org.apache.avro.file.DataFileReader;
 import org.apache.avro.file.DataFileWriter;
-
-import example.avro.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +36,7 @@ public class AvroExample {
 				.build();
 		System.out.println("user1: " + user1);
 
-		String path = "target/users.avro";
+		String path = "common/target/users.avro";
 		// Serialize user1, user2 and user3 to disk
 		// distill schema, from generated class, store as in-memory
 		DatumWriter<User> userDatumWriter = new SpecificDatumWriter<User>(User.class);

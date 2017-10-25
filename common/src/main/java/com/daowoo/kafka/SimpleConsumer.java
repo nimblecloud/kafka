@@ -13,33 +13,37 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.kafka.clients.consumer.*;
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.common.TopicPartition;
 
 public class SimpleConsumer {
 
-	static Consumer<String, String> getConsumer(Configure config) {
+	public static Properties getProperties(Configure config) {
 		Properties props = new Properties();
 		props.put("bootstrap.servers", config.getProperty("broker"));
-	    props.put("group.id", config.getProperty("group"));
-	    props.put("client.id", config.getProperty("client"));
-	    
-	    props.put("enable.auto.commit", "true");
-	    props.put("auto.commit.interval.ms", "1000");
+		props.put("group.id", config.getProperty("group"));
+		props.put("client.id", config.getProperty("client"));
 
-	    boolean testing = true;
-	    if (testing) {
-		    props.put("max.poll.records", "5");
-		    props.put("metadata.max.age.ms", "10");
-		    //props.put("auto.offset.reset", "earliest");
-		    //props.put("exclude.internal.topics", "false");
-		}	    
-	    
-	    /** no need check crc */
-	    props.put("check.crcs", "false");
-	    props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-	    props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-	    
+		props.put("enable.auto.commit", "true");
+		props.put("auto.commit.interval.ms", "1000");
+
+		boolean testing = true;
+		if (testing) {
+			props.put("max.poll.records", "5");
+			props.put("metadata.max.age.ms", "10");
+			//props.put("auto.offset.reset", "earliest");
+			//props.put("exclude.internal.topics", "false");
+		}
+
+		/** no need check crc */
+		props.put("check.crcs", "false");
+		props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+		props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+		return props;
+	}
+	static Consumer<String, String> getConsumer(Configure config) {
+		Properties props = getProperties(config);
 	    return new KafkaConsumer<>(props);
 	}
 	
